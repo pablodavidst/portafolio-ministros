@@ -26,6 +26,12 @@ const path = require('path');
 var fs = require('fs');
 const fileUpload = require('express-fileupload');
 
+const mesesdjson = [{"iglesia":"Ejemplo","periodo":"2020 - November","comprobante":"--","fecha_registr":null,"diezmo":0},{"iglesia":"Ejemplo","periodo":"2020 - October","comprobante":"--","fecha_registr":null,"diezmo":0},{"iglesia":"Ejemplo","periodo":"2020 - September","comprobante":"--","fecha_registr":null,"diezmo":0},{"iglesia":"Ejemplo","periodo":"2020 - August","comprobante":"C24173","fecha_registr":"2020-09-09","diezmo":3833.33},{"iglesia":"Ejemplo","periodo":"2020 - July","comprobante":"C24173","fecha_registr":"2020-09-09","diezmo":3833.33},{"iglesia":"Ejemplo","periodo":"2020 - June","comprobante":"C24173","fecha_registr":"2020-09-09","diezmo":3833.33},{"iglesia":"Ejemplo","periodo":"2020 - June","comprobante":"C23337","fecha_registr":"2020-06-24","diezmo":3404.29},{"iglesia":"Ejemplo","periodo":"2020 - May","comprobante":"C23337","fecha_registr":"2020-06-24","diezmo":3404.29},{"iglesia":"Ejemplo","periodo":"2020 - April","comprobante":"C23337","fecha_registr":"2020-06-24","diezmo":3404.29},{"iglesia":"Ejemplo","periodo":"2020 - March","comprobante":"C23337","fecha_registr":"2020-06-24","diezmo":3404.29},{"iglesia":"Ejemplo","periodo":"2020 - February","comprobante":"C23337","fecha_registr":"2020-06-24","diezmo":3404.29}]
+
+const iglesiasjson = [{"nombre":"Iglesia Ejemplo","localidad":"Parque Chacabuco, Ciudad Autónoma De Buenos Aires","provincia":"CABA","region":"Región 1","tipo_iglesia":"Autónoma","encargado":"Pr. Ejemplo","cod_iglesia":"36","id_iglesia":6,"presentacion":"Iglesia Ejemplo - CABA (Ciudad Autónoma De Buenos Aires)","pagina_web":"www.ejemplo.org","telefono":"011-15151-8920","fax":"","fich_culto":true,"hab_municip":true,"hogar_niños":false,"cant_miembros":16000,"comedor":false,"colegio":false,"dispensario":false,"libro_cont":true,"pastor":"Ejemplo","predio_recreat":false,"rehabilit":true,"seguro":true,"estado_balances":0,"detalle_diezmos":0,"cod_postal":"1424","id_provincia":21,"direccion":"Av. Ejemplo 140","barrio":"Parque Ejemplo"}]
+
+const ingresosjson = [{"fecha":"03/11/2020","comprobante":"C24870","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Belgrano R (Ciudad Autónoma de Buenos Aires), CABA","det_rc":"Oct-2020 ","monto":"5,000.00"},{"fecha":"03/11/2020","comprobante":"C24871","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Dallera  (Campana), Buenos Aires","det_rc":"Oct-2020 ","monto":"2,600.00"},{"fecha":"03/11/2020","comprobante":"C24874","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Villa Lugano (Capital Federal), CABA","det_rc":"Oct-2020 ","monto":"1,880.00"},{"fecha":"03/11/2020","comprobante":"C24875","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Ranelagh, Buenos Aires (Berazategui)","det_rc":"Oct-2020 ","monto":"10,000.00"},{"fecha":"03/11/2020","comprobante":"C24876","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"centro (Lujan), Buenos Aires","det_rc":"Jun-2020 , Jul-2020 , Ago-2020 , Sep-2020 ","monto":"10,100.00"},{"fecha":"03/11/2020","comprobante":"C24877","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Berazategui, Buenos Aires","det_rc":"Oct-2020 ","monto":"1,000.00"},{"fecha":"03/11/2020","comprobante":"C24878","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Sarmiento (Villa Ballester), Buenos Aires (San Martin)","det_rc":"Sep-2020 ","monto":"12,000.00"},{"fecha":"04/11/2020","comprobante":"C24879","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Almagro (Capital Federal), CABA","det_rc":"Mar-2020 , Abr-2020 , May-2020 , Jun-2020 , Jul-2020 , Ago-2020 , Sep-2020 , Oct-2020 ","monto":"10,000.00"},{"fecha":"04/11/2020","comprobante":"C24880","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Loma Hermosa, Buenos Aires (Tres de Febrero)","det_rc":"Oct-2020 ","monto":"12,000.00"},{"fecha":"04/11/2020","comprobante":"C24881","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Bo. Reconquista (Merlo), Buenos Aires","det_rc":"Ago-2020 , Sep-2020 ","monto":"2,000.00"},{"fecha":"04/11/2020","comprobante":"C24882","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Bo. La Boca (Capital Federal), CABA","det_rc":"Sep-2020 ","monto":"15,250.00"},{"fecha":"04/11/2020","comprobante":"C24883","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Bo. La Boca (Capital Federal), CABA","det_rc":"Oct-2020 ","monto":"15,800.00"},{"fecha":"04/11/2020","comprobante":"C24884","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Bo. Reconquista (Merlo), Buenos Aires","det_rc":"Sep-2020 ","monto":"2,000.00"},{"fecha":"04/11/2020","comprobante":"C24889","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Los cardales, Pdo. de Exaltacion De La Cruz, Buenos Aires","det_rc":"Sep-2020 ","monto":"6,390.00"},{"fecha":"04/11/2020","comprobante":"C24890","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Moron (Moron), Buenos Aires","det_rc":"Ene-2020 , Feb-2020 ","monto":"70,000.00"},{"fecha":"04/11/2020","comprobante":"C24891","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Moron (Moron), Buenos Aires","det_rc":"Jul-2020 , Ago-2020 ","monto":"70,000.00"},{"fecha":"05/11/2020","comprobante":"C24892","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Moron (Moron), Buenos Aires","det_rc":"Sep-2020 , Oct-2020 ","monto":"70,000.00"},{"fecha":"05/11/2020","comprobante":"C24893","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Cdad. Jardín  (El Palomar), Buenos Aires (Tres de Febrero)","det_rc":"Oct-2020 ","monto":"7,000.00"},{"fecha":"05/11/2020","comprobante":"C24894","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Don Torcuato, Buenos Aires (Tigre)","det_rc":"Sep-2020 ","monto":"20,000.00"},{"fecha":"05/11/2020","comprobante":"C24895","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Villa Del Carmen - G. Catan (La Matanza), Buenos Aires","det_rc":"Sep-2020 , Oct-2020 ","monto":"20,000.00"},{"fecha":"05/11/2020","comprobante":"C24896","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Bo. Textil (Guillermo E. Hudson), Buenos Aires (Berazategui)","det_rc":"Oct-2020 ","monto":"14,940.00"},{"fecha":"05/11/2020","comprobante":"C24897","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Miramar, Buenos Aires (General Alvarado)","det_rc":"Oct-2020 ","monto":"15,320.00"},{"fecha":"05/11/2020","comprobante":"C24899","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Bo. Chacarita (Capital Federal), CABA","det_rc":"Sep-2020 ","monto":"2,500.00"},{"fecha":"05/11/2020","comprobante":"C24903","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Bernal Oeste, Buenos Aires (Quilmes)","det_rc":"Sep-2020 ","monto":"3,000.00"},{"fecha":"05/11/2020","comprobante":"C24905","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Villa Escobar (Francisco Alvarez), Buenos Aires (Moreno)","det_rc":"Oct-2020 ","monto":"30,000.00"},{"fecha":"05/11/2020","comprobante":"C24906","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Villa Escobar (Francisco Alvarez), Buenos Aires (Moreno)","det_rc":"Oct-2020 ","monto":"1,000.00"},{"fecha":"05/11/2020","comprobante":"C24907","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Villa Escobar (Francisco Alvarez), Buenos Aires (Moreno)","det_rc":"Oct-2020 ","monto":"500.00"},{"fecha":"05/11/2020","comprobante":"C24908","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Villa Escobar (Francisco Alvarez), Buenos Aires (Moreno)","det_rc":"Oct-2020 ","monto":"500.00"},{"fecha":"05/11/2020","comprobante":"C24909","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Martinez, Buenos Aires (San Isidro)","det_rc":"Ene-2020 , Feb-2020 , Mar-2020 , Abr-2020 , May-2020 , Jun-2020 , Jul-2020 , Ago-2020 ","monto":"18,000.00"},{"fecha":"05/11/2020","comprobante":"C24910","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"La Plata, Buenos Aires","det_rc":"Oct-2020 ","monto":"22,650.00"},{"fecha":"05/11/2020","comprobante":"C24911","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"La Plata, Buenos Aires","det_rc":"Ene-2020 ","monto":"1,100.00"},{"fecha":"05/11/2020","comprobante":"C24912","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"La Plata, Buenos Aires","det_rc":"Feb-2020 ","monto":"1,600.00"},{"fecha":"05/11/2020","comprobante":"C24913","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"La Plata, Buenos Aires","det_rc":"Mar-2020 , Abr-2020 , May-2020 , Jun-2020 ","monto":"3,930.00"},{"fecha":"05/11/2020","comprobante":"C24914","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"La Plata, Buenos Aires","det_rc":"Feb-2020 , Mar-2020 , Abr-2020 , May-2020 , Jun-2020 , Jul-2020 , Ago-2020 , Sep-2020 ","monto":"4,000.00"},{"fecha":"05/11/2020","comprobante":"C24915","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"La Plata, Buenos Aires","det_rc":"Feb-2020 , Mar-2020 , Abr-2020 , May-2020 , Jun-2020 , Jul-2020 , Ago-2020 , Sep-2020 ","monto":"2,200.00"},{"fecha":"05/11/2020","comprobante":"C24916","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"La Plata, Buenos Aires","det_rc":"Abr-2020 , May-2020 , Jun-2020 , Jul-2020 , Ago-2020 , Sep-2020 ","monto":"2,400.00"},{"fecha":"05/11/2020","comprobante":"C24918","contribuyente":"ejemplo","titular":"titular","domicilio":"domicilio","provincia":"Crisol (Victoria), Buenos Aires (San Fernando)","det_rc":"Ago-2020 , Sep-2020 , Oct-2020 ","monto":"23,600.00"}]
+
 const verificarNroDocumentoObrero = (req,res,next) =>{
     const {nro_documento} = req.body 
 
@@ -105,13 +111,20 @@ tablasgeneralesRouter.get('/obreros/:id_region',procesarErrores((req,res)=>{
     })
 }))
 
-tablasgeneralesRouter.get('/iglesiasobrero/:id_obrero',jwtAuthenticate,procesarErrores((req,res)=>{
+tablasgeneralesRouter.get('/iglesiasobreroOLD/:id_obrero',jwtAuthenticate,procesarErrores((req,res)=>{
     const id_obrero = req.params.id_obrero;
     return tablasgeneralesController.obtenerIglesiasPorObrero(id_obrero)
     .then(iglesias=>{
         res.status(200).json(iglesias.recordset)
     })
 }))
+
+tablasgeneralesRouter.get('/iglesiasobrero/:id_obrero',jwtAuthenticate,procesarErrores((req,res)=>{
+
+        res.status(200).json(iglesiasjson)
+}))
+
+
 
 tablasgeneralesRouter.get('/iglesiasobreroall/:id_obrero',jwtAuthenticate,procesarErrores((req,res)=>{
     const id_obrero = req.params.id_obrero;
@@ -121,7 +134,7 @@ tablasgeneralesRouter.get('/iglesiasobreroall/:id_obrero',jwtAuthenticate,proces
     })
 }))
 
-tablasgeneralesRouter.get('/iglesias/:id_region/:id_per_fiscal',jwtAuthenticate,procesarErrores((req,res)=>{
+tablasgeneralesRouter.get('/iglesias/:id_region/:id_per_fiscal',procesarErrores((req,res)=>{
     const id_region = req.params.id_region;
     const id_per_fiscal = req.params.id_per_fiscal;
 
@@ -365,7 +378,7 @@ tablasgeneralesRouter.get('/obrero/:id',jwtAuthenticate,procesarErrores((req,res
     })
 }))
 
-tablasgeneralesRouter.get('/mesesdiezmados/:id',jwtAuthenticate,procesarErrores((req,res)=>{
+tablasgeneralesRouter.get('/mesesdiezmadosOLD/:id',jwtAuthenticate,procesarErrores((req,res)=>{
     const id=req.params.id;
 
     return tablasgeneralesController.obtenerMesesDiezmados(id)
@@ -373,6 +386,13 @@ tablasgeneralesRouter.get('/mesesdiezmados/:id',jwtAuthenticate,procesarErrores(
         res.status(200).json(meses.recordset)
     })
 }))
+
+tablasgeneralesRouter.get('/mesesdiezmados/:id',procesarErrores((req,res)=>{
+
+     res.status(200).json(mesesdjson)
+}))
+
+
 
 tablasgeneralesRouter.get('/balances/:id',jwtAuthenticate,procesarErrores((req,res)=>{
     const id=req.params.id;
@@ -384,7 +404,7 @@ tablasgeneralesRouter.get('/balances/:id',jwtAuthenticate,procesarErrores((req,r
 }))
 
 
-tablasgeneralesRouter.get('/ingresos/:id_region/:mes_d/:mes_h/:anio_d/:anio_h/:dia_d/:dia_h',procesarErrores((req,res)=>{
+tablasgeneralesRouter.get('/ingresosOLD/:id_region/:mes_d/:mes_h/:anio_d/:anio_h/:dia_d/:dia_h',procesarErrores((req,res)=>{
     const id_region=req.params.id_region;
     const mes_d=req.params.mes_d;
     const mes_h=req.params.mes_h;
@@ -400,6 +420,18 @@ tablasgeneralesRouter.get('/ingresos/:id_region/:mes_d/:mes_h/:anio_d/:anio_h/:d
     })
 }))
 
+tablasgeneralesRouter.get('/ingresos/:id_region/:mes_d/:mes_h/:anio_d/:anio_h/:dia_d/:dia_h',procesarErrores((req,res)=>{
+    const id_region=req.params.id_region;
+    const mes_d=req.params.mes_d;
+    const mes_h=req.params.mes_h;
+    const anio_d=req.params.anio_d;
+    const anio_h=req.params.anio_h;
+    const dia_d=req.params.dia_d;
+    const dia_h=req.params.dia_h;
+
+    res.status(200).json(ingresosjson)
+
+}))
 
 storage = multer.diskStorage({
     destination: (req,file,callback)=>{
@@ -465,11 +497,11 @@ tablasgeneralesRouter.post('/enviarmail',upload,validarMail,async (req,res)=>{
 Mail enviado desde el sistema administrativo UAD - Region ${id_region}
 ` 
    
-const firma = `"UAD - Región ${id_region}"`
+const firma = `"Ejemplo - Ejemplo ${id_region}"`
 
     try{
         const respuesta = await transporter.sendMail({
-            from:`${firma} <regiones@uad.org.ar>`,
+            from:`${firma} <ejemplo@uad.org.ar>`,
             subject: asunto,
             text:mensaje_con_firma,
             bcc:destinatarios,
@@ -482,7 +514,8 @@ const firma = `"UAD - Región ${id_region}"`
         res.status(200).json(respuesta)
     }catch(err){
         log.error(err)
-        res.status(500).json(err)
+        res.status(500).send('El servidor de correo no se encuentra operativo en este ejemplo por razones de seguridad');
+
     }
 
 })

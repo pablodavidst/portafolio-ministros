@@ -4,11 +4,10 @@ module.exports ={
         tiempoDeExpiracion:'24h'
     },
     dbconfig:{
-        user: 'xxx',
+        user: 'xxx',  
         password: 'xxx',
         server: 'xxx', 
-        //server: '190.244.222.7',
-        database: 'xxx',
+        database: 'xxx',   
         options: {
             encrypt: false,
         },
